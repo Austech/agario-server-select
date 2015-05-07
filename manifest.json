@@ -5,6 +5,7 @@
   "description": "This extension adds a dropdown list to select the server ip. Easier to find friends!",
   "version": "1.0",
 
+  "author": "Austin Shindlecker",
   
   "content_scripts":
   [
