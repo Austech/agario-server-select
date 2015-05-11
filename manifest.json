@@ -3,7 +3,7 @@
 
   "name": "agar.io server browser",
   "description": "This extension adds a dropdown list to select the server ip. Easier to find friends!",
-  "version": "1.0",
+  "version": "1.2",
 
   "author": "Austin Shindlecker",
   
