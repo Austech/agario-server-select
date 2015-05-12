@@ -2,7 +2,7 @@
 
 var regions = [["US-Fremont","US West"], ["US-Atlanta", "US East"], ["BR-Brazil", "South America"], ["EU-London", "Europe"], ["RU-Russia", "Russia"], ["JP-Tokyo", "East Asia"], ["CN-China", "China"], ["SG-Singapore", "Oceana"]];
 var serverIPs = [];
-var retryCount = 20;
+var retryCount = 0;
 
 $("body").ready(function ()
 {
@@ -52,7 +52,8 @@ function addServer(list, toClone, server)
 
 function regionChanged(data)
 {
-	var value = $("#region").val();
+	if($("#region").val() === null) return;
+	var value = $("#region").val() + $("#gamemode").val();
 		$.ajax({
 			type: "POST",
 			url: "http://m.agar.io/",
@@ -92,8 +93,28 @@ function createUI()
 	
 	newRegion.attr("onchange", "(" + regionChanged + ")()");
 	
+	parent.find("br").remove();
 	parent.append(newRegion);
 	
+	//modify gamemode selection event
+	var tempGamemode = $("#gamemode").clone();
+	$("#gamemode").remove();
+	
+	var newGamemode = $('<select id="gamemode" class="form-control">');
+	
+	for(var i = 0; i < tempGamemode.children().length; i++)
+	{
+		newGamemode.append($(tempGamemode.children()[i]).clone());
+	}
+	
+	newGamemode.attr("onchange", "(" + regionChanged + ")()");
+	
+	parent.append(newGamemode);
+	
+	parent.append("<br/>");
+	parent.append("<br/>");
+	
+	/*
 	//create selection dropdown
 	var serverListElement = $('<select id="server" class="form-control">');
 	var listItemTitle = newRegion.children()[0].cloneNode(true);
@@ -108,7 +129,7 @@ function createUI()
 	
 	$("#region").parent().append("</br>");
 	$("#region").parent().append(serverListElement);
-	
+	*/
 	
 	//create a retry button for IP connecting
 	var uiDiv = $("#playBtn").parent();
